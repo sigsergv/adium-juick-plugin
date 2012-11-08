@@ -29,7 +29,15 @@
         NSString *nameReplace = @"(?!@juick)(@[\\w\\d_-]+)";
         regex = [NSRegularExpression regularExpressionWithPattern:nameReplace options:0 error:NULL];
         NSString *newMessage1 = [regex stringByReplacingMatchesInString:newMessage options:0 range:NSMakeRange(0, [newMessage length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1+%20\">$1</a>"];
-        return newMessage1;
+        
+        NSString *picReplace = @"<a href=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}]+(\\.(jpg|png|gif|bmp)))\" title=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}]+(\\.(jpg|png|gif|bmp)))\">(http://[\\/\\.\\w\\d\\_\\-\\p{L}]+(\\.(jpg|png|gif|bmp)))</a>";
+        regex = [NSRegularExpression regularExpressionWithPattern:picReplace options:0 error:NULL];
+        NSString *newMessage2 = [regex stringByReplacingMatchesInString:newMessage1 options:0 range:NSMakeRange(0, [newMessage1 length]) withTemplate:@"<img src=\"$1\" style=\"max-width: 100%%; max-height: 100%%;\" onLoad=\"imageSwap(this, false);alignChat(nil);\" />"];
+        NSLog(@"%@", message);
+        return newMessage2;
+        
+        
+        
 }
 
 
@@ -49,7 +57,7 @@
 
 - (NSString *)pluginDescription
 {
-	return @"Plugin for microblogging social network juick.com.";
+	return @"Plugin for asocial XMPP network juick.com.";
 }
 
 - (NSString *)pluginURL
