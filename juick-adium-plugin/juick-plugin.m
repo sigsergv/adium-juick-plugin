@@ -39,6 +39,7 @@
 - (NSAttributedString *)filterAttributedString:(NSAttributedString *)str context:(id)context
 {
     @autoreleasepool {
+        
 	    return str;
     }
 }
