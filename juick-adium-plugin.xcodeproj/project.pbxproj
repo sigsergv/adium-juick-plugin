@@ -163,6 +163,7 @@
 				uk,
 				zh_CN,
 				zh_TW,
+				English,
 			);
 			mainGroup = E91F037E1647E370003693FC;
 			productRefGroup = E91F038A1647E370003693FC /* Products */;

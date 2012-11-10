@@ -8,11 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Adium/AIPlugin.h>
-#import <Adium/AIContentControllerProtocol.h>
-#import <Adium/AIContentObject.h>
+#import <Adium/AISharedAdium.h>
+#import <Adium/AIChat.h>
+#import <Adium/AIListObject.h>
 #import <Adium/AIListContact.h>
+#import <Adium/AIContactControllerProtocol.h>
+#import <Adium/AICorePluginLoader.h>
+#import <Adium/AIContentControllerProtocol.h>
+#import <Adium/AIInterfaceControllerProtocol.h>
 
-@interface juick_plugin : NSObject <AIHTMLContentFilter> 
+
+@interface juick_plugin : NSObject <AIHTMLContentFilter, AIContentFilter>
 - (void) installPlugin;
 - (void) uninstallPlugin;
 
