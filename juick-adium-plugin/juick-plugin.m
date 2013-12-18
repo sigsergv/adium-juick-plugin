@@ -29,10 +29,12 @@
         regex = [NSRegularExpression regularExpressionWithPattern:nameIdReplace options:0 error:NULL];
         NSString *messageWithNameId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [messageWithPostId length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1+%20\">$1</a>"];
         
+        /* // disabled pics for now
         NSString *picReplace = @"<a href=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))\" title=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))\">(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))</a>";
         regex = [NSRegularExpression regularExpressionWithPattern:picReplace options:0 error:NULL];
         NSString *newMessage = [regex stringByReplacingMatchesInString:messageWithNameId options:0 range:NSMakeRange(0, [messageWithNameId length]) withTemplate:@"<img src=\"$1\" style=\"max-width: 100%%; max-height: 100%%;\" onLoad=\"imageSwap(this, false);alignChat();window.scrollTo(0, document.body.scrollHeight)\"/>"];
-        return newMessage;
+         */
+        return messageWithNameId;
     }
 }
 
