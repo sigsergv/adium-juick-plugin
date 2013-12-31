@@ -21,7 +21,7 @@
 - (NSString *) filterHTMLString:(NSString *)message content:(AIContentObject *)content
 {
     @autoreleasepool {
-        NSString *postIdReplace = @"(#\\d{3,}(\\/\\d+)?)";
+        NSString *postIdReplace = @"(#\\d{5,}(\\/\\d+)?)";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
         NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1%20\">$1</a>"];
         
