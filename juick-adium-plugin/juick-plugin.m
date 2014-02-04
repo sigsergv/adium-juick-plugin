@@ -21,20 +21,29 @@
 - (NSString *) filterHTMLString:(NSString *)message content:(AIContentObject *)content
 {
     @autoreleasepool {
-        NSString *postIdReplace = @"(#\\d{5,}(\\/\\d+)?)";
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
-        NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1%20\">$1</a>"];
+        NSString* juickUID = @"juick@juick.com";
+        NSString* pointimUID = @"p@point.im";
         
-        NSString *nameIdReplace = @"(?!@juick)(@[\\w\\d_-]+)";
-        regex = [NSRegularExpression regularExpressionWithPattern:nameIdReplace options:0 error:NULL];
-        NSString *messageWithNameId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [messageWithPostId length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1+%20\">$1</a>"];
+        if ([content.source.UID isEqualToString:juickUID]) {
+            // we are in the JUICK section
+            NSString *postIdReplace = @"(#\\d{5,}(\\/\\d+)?)";
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
+            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1%20\">$1</a>"];
+            
+            NSString *nameIdReplace = @"(?!@juick)(@[\\w\\d_-]+)";
+            regex = [NSRegularExpression regularExpressionWithPattern:nameIdReplace options:0 error:NULL];
+            NSString *messageWithNameId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [messageWithPostId length]) withTemplate:@"<a href=\"xmpp:juick@juick.com?message;body=$1+%20\">$1</a>"];
+            return messageWithNameId;
+        } else if ([content.source.UID isEqualToString:pointimUID]) {
+            //  we are in the POINT.IM section
+            NSString *postIdReplace = @"(#[a-z]{3,}(\\/\\d+)?)";
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
+            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=$1%20\">$1</a>"];
+            
+            return messageWithPostId;
+        }
         
-        /* // disabled pics for now
-        NSString *picReplace = @"<a href=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))\" title=\"(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))\">(http://[\\/\\.\\w\\d\\_\\-\\p{L}\\%]+(\\.(jpg|png|gif|bmp)))</a>";
-        regex = [NSRegularExpression regularExpressionWithPattern:picReplace options:0 error:NULL];
-        NSString *newMessage = [regex stringByReplacingMatchesInString:messageWithNameId options:0 range:NSMakeRange(0, [messageWithNameId length]) withTemplate:@"<img src=\"$1\" style=\"max-width: 100%%; max-height: 100%%;\" onLoad=\"imageSwap(this, false);alignChat();window.scrollTo(0, document.body.scrollHeight)\"/>"];
-         */
-        return messageWithNameId;
+        return message;
     }
 }
 
