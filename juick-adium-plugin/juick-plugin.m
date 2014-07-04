@@ -36,9 +36,9 @@
             return messageWithNameId;
         } else if ([content.source.UID isEqualToString:pointimUID]) {
             //  we are in the POINT.IM section
-            NSString *postIdReplace = @"(#[a-z]{3,}(\\/\\d+)?)";
+            NSString *postIdReplace = @"#([a-z]{3,}(\\/\\d+)?)";
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
-            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=$1%20\">$1</a>"];
+            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1%20\">#$1</a> <a href=\"http://point.im/$1\"><strong>✈︎</strong></a>"];
             
             return messageWithPostId;
         }
@@ -61,17 +61,17 @@
 
 - (NSString *)pluginAuthor
 {
-	return @"s1dney";
+	return @"s1dney, sigsergv";
 }
 
 - (NSString *)pluginVersion
 {
-	return @"0.02";
+	return @"0.3";
 }
 
 - (NSString *)pluginDescription
 {
-	return @"Plugin for asocial XMPP network juick.com.";
+	return @"Plugin for asocial XMPP network juick.com and point.im.";
 }
 
 - (NSString *)pluginURL
