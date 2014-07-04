@@ -36,9 +36,13 @@
             return messageWithNameId;
         } else if ([content.source.UID isEqualToString:pointimUID]) {
             //  we are in the POINT.IM section
-            NSString *postIdReplace = @"#([a-z]{3,}(\\/\\d+)?)";
+            NSString *postIdReplace = @"#([a-z]{3,})([^/a-z])";
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
-            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1%20\">#$1</a> <a href=\"http://point.im/$1\"><strong>✈︎</strong></a>"];
+            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1%20\">#$1</a>$2 <a href=\"http://point.im/$1\"><strong>✈︎</strong></a> "];
+            
+            postIdReplace = @"#([a-z]{3,})/([0-9]+)";
+            regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
+            messageWithPostId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1/$2%20\">#$1/$2</a> <a href=\"http://point.im/$1#$2\"><strong>✈︎</strong></a> "];
             
             return messageWithPostId;
         }
