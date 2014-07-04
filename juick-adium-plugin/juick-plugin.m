@@ -42,7 +42,12 @@
             
             postIdReplace = @"#([a-z]{3,})/([0-9]+)";
             regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
-            messageWithPostId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [message length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1/$2%20\">#$1/$2</a> <a href=\"http://point.im/$1#$2\"><strong>✈︎</strong></a> "];
+            messageWithPostId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [messageWithPostId length]) withTemplate:@"<a href=\"xmpp:p@point.im?message;body=#$1/$2%20\">#$1/$2</a> <a href=\"http://point.im/$1#$2\"><strong>✈︎</strong></a> "];
+            
+            postIdReplace = @"([^&])#([a-z]{3,})$";
+            regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
+            messageWithPostId = [regex stringByReplacingMatchesInString:messageWithPostId options:0 range:NSMakeRange(0, [messageWithPostId length]) withTemplate:@"$1<a href=\"xmpp:p@point.im?message;body=#$1%20\">#$2</a>$3 <a href=\"http://point.im/$2\"><strong>✈︎</strong></a>$3 "];
+
             
             return messageWithPostId;
         }
