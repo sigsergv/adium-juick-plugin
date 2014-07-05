@@ -38,7 +38,7 @@
             //  we are in the POINT.IM section
             NSString *postIdReplace = @"([^&])#([a-z]{3,})([^/a-z])";
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
-            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"$1<a href=\"xmpp:p@point.im?message;body=#$1%20\">#$2</a>$3 <a href=\"http://point.im/$2\"><strong>✈︎</strong></a>$3 "];
+            NSString *messageWithPostId = [regex stringByReplacingMatchesInString:message options:0 range:NSMakeRange(0, [message length]) withTemplate:@"$1<a href=\"xmpp:p@point.im?message;body=#$2%20\">#$2</a>$3 <a href=\"http://point.im/$2\"><strong>✈︎</strong></a>$3 "];
             
             postIdReplace = @"#([a-z]{3,})/([0-9]+)";
             regex = [NSRegularExpression regularExpressionWithPattern:postIdReplace options:0 error:NULL];
