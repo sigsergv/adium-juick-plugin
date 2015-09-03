@@ -15,6 +15,6 @@ Open on XCode and compile, you also need Adium source code for Adium headers.
 Download & Install
 ==================
 
-You can also download compiled binary version: https://www.dropbox.com/s/44u6v1qkxht1b1n/juick-adium-plugin.AdiumPlugin-20140704.zip
+You can also download compiled binary version: https://www.dropbox.com/s/sncemetjez61mf2/juick-adium-plugin.AdiumPlugin-20141227.zip?dl=1
 
 Just download it, unpack, double click in Finder (Adium will detect new plugin) and restart Adium.
